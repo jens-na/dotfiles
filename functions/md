@@ -1,0 +1,1 @@
+markdown $1 /tmp/markdown && firefox -new-tab /tmp/markdown &

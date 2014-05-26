@@ -1,0 +1,25 @@
+[user]
+	name = AUTHORNAME
+	email = AUTHOREMAIL
+
+[credential]
+  helper = GIT_CREDENTIAL_HELPER
+
+[push]
+	default = simple
+
+[core]
+	autocrlf = input
+  editor = vim
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
+
+[alias]
+  s = !git status -s
+  l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  upstream = "!sh -c 'git remote add upstream \"https://github.com/$1.git\" && git fetch upstream' -"
+

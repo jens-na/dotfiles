@@ -1,0 +1,135 @@
+set nocompatible
+execute pathogen#infect()
+let mapleader=','
+
+filetype plugin indent on
+syntax on
+set number
+set backspace=indent,eol,start
+set showcmd
+set incsearch
+set hlsearch
+set textwidth=72
+set laststatus=2
+set shortmess=
+set encoding=utf-8
+
+" tabstops 
+set expandtab
+set softtabstop=2
+set tabstop=2
+set shiftwidth=2
+
+" spelling
+set spelllang=
+map <silent><Leader>sd :setlocal spelllang=de_de spell<CR>
+map <silent><Leader>se :setlocal spelllang=en_us spell<CR>
+map <silent><Leader>so :setlocal spelllang=<CR>
+
+inoremap jk <ESC>
+
+" font for windows
+if has('gui_running') && has('win32')
+  set guifont=Consolas
+else
+  set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
+endif
+" mouse support
+if has('mouse')
+  set mouse=a
+endif
+
+" colors
+if has('gui_running')
+  try
+    colorscheme base16-tomorrow
+  catch /^Vim\%((\a\+)\)\=:E185/
+    colorscheme default	
+  endtry
+endif
+set background=dark
+"set fillchars+=vert:\  
+
+map qq :q!<CR>
+map <Leader>mm :make<CR>
+map <Leader>mc :make clean<CR>
+
+map <Leader>ve :split $MYVIMRC<CR>
+map <Leader>vo :source $MYVIMRC<CR>
+
+map <C-r><Up> :exe "resize " . (winheight(0) * 3/2)<CR>
+map <C-r><Down> :exe "resize " . (winheight(0) * 2/3)<CR>
+
+map <C-k> <C-w><Up>
+map <C-j> <C-w><Down>
+map <C-l> <C-w><Right>
+map <C-h> <C-w><Left>
+
+map <Up> <Nop>
+map <Down> <Nop>
+map <Right> <Nop>
+map <Left> <Nop>
+
+" ctrl+pagedown/pageup for tab navigation
+map <CTRL-V><CTRL-PAGEUP> :tabp<CR>
+map <CTRL-V><CTRL-PAGEDOWN> :tabn<CR>
+
+" auto completion
+if has("gui_running")
+  inoremap <C-Space> <C-n>
+else 
+  if has("unix")
+    inoremap <Nul> <C-n>
+  endif
+endif
+
+function! s:setcwd()
+  let cph = expand('%:p:h', 1)
+  if cph =~ '^.\+://' | retu | en
+  for mkr in ['.git/', '.hg/', '.svn/', '.bzr/', '_darcs/', '.vimprojects']
+    let wd = call('find'.(mkr =~ '/$' ? 'dir' : 'file'), [mkr, cph.';'])
+    if wd != '' | let &acd = 0 | brea | en
+  endfo
+  exe 'lc!' fnameescape(wd == '' ? cph : substitute(wd, mkr.'$', '.', ''))
+endfunction
+autocmd BufEnter * call s:setcwd()
+
+" searching
+map <C-f> :call Custom_Vim_Search()<CR>
+function! Custom_Vim_Search()
+  let pattern = inputdialog('search in files: ', expand('<cword>'))
+  if !empty(pattern)
+    try
+      execute 'noautocmd vimgrep /' . pattern .  '/j **/** | botright copen'
+    catch /^Vim\%((\a\+)\)\=:E480/ 
+      " do nothing
+    endtry
+  endif
+endfunction
+map <Leader>ff :botright copen<CR>
+
+" nerdtree
+map <silent><Leader>n :NERDTreeFind<CR>
+let g:NERDTreeShowBookmarks=1
+
+" tagbar
+map <Leader>t :Tagbar<CR>
+
+" ctrlp 
+map <C-b> :CtrlPBuffer<CR>
+map <F5> :CtrlPBookmarkDir<CR>
+let g:ctrlp_map = '<c-p>'
+"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files']
+let g:ctrlp_custom_ignore = {
+      \ 'dir': '\v[\/]\.(git|_site)$',
+      \ 'file': '\v\.(so)$',
+      \ }
+
+" airline
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_buffers = 1
+
+let g:table_mode_fillchar = '-'
+let g:table_mode_separator = '|'
+
