@@ -1,1 +1,3 @@
+# Renders the given file to markdown and opens the file in 
+# my web browser Firefox
 markdown $1 /tmp/markdown && firefox -new-tab /tmp/markdown &

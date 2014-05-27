@@ -1,2 +1,4 @@
+# Starts the ssh authentication angent and
+# adds a private key to it.
 eval `ssh-agent`
 ssh-add ~/.ssh/github.com
