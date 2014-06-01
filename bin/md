@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require 'github/markup'
+
+if ARGV[0] && File.exists?(file = ARGV[0])
+  rendered = GitHub::Markup.render(file)
+  File.open("/tmp/markdown-rendered.html", 'w') do |f|
+    f.write(rendered)
+  end
+
+  system("firefox -new-tab /tmp/markdown-rendered.html")
+end
