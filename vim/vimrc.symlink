@@ -34,19 +34,18 @@ if has('gui_running') && has('win32')
 else
   set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
 endif
+
 " mouse support
 if has('mouse')
   set mouse=a
 endif
 
 " colors
-if has('gui_running')
-  try
-    colorscheme base16-tomorrow
+try
+  colorscheme base16-default
   catch /^Vim\%((\a\+)\)\=:E185/
     colorscheme default	
   endtry
-endif
 set background=dark
 "set fillchars+=vert:\  
 
