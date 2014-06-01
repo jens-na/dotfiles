@@ -23,3 +23,10 @@
   l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   upstream = "!sh -c 'git remote add upstream \"https://github.com/$1.git\" && git fetch upstream' -"
 
+[merge]
+	tool = diffconflicts
+
+[mergetool "diffconflicts"]
+	cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
+	trustExitCode = true
+	keepBackup = false
